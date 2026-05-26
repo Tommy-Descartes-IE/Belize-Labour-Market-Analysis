@@ -126,7 +126,7 @@ twoway ///
     lcolor(maroon) lwidth(medthick) ///
     lpattern(dash)), ///
 yline(0, lcolor(gs10)) ///
-title("") ///
+title("Panel 1: Real GDP Growth", position(11) color(navy) size(medium)) ///
 subtitle("") ///
 xtitle("") ///
 ytitle("Percent") ///
@@ -134,14 +134,188 @@ xlabel(1980(5)2025) ///
 ylabel(-15(5)25, angle(horizontal)) ///
 legend(order(10 "Annual growth" 11 "5-year moving average" ///
              1 "Boom episodes" 4 "Bust episodes") ///
-       position(6) rows(2) region(lcolor(none))) ///
+       position(11) size(small) rows(1) region(lcolor(none))) ///
 graphregion(color(white)) ///
 plotregion(color(white)) ///
-scheme(s1color) ///
-note("Source: Author's calculations." ///
-     "Data: IMF World Economic Outlook database." ///
+scheme(s1color) /// 
+xsize(6) ///
+ysize(4) ///
+note("Data: IMF World Economic Outlook database." ///
      "Shaded areas identify selected boom and bust episodes.", ///
      size(vsmall))
+
+graph save "output\figures\histgrowth.gph", replace
+	 
+*===============================================================================*
+*Generate 5 Year Intervals
+*===============================================================================*
+
+gen period5=.
+
+replace period5=1 if inrange(year,1980,1984)
+replace period5=2 if inrange(year,1985,1989)
+replace period5=3 if inrange(year,1990,1994)
+replace period5=4 if inrange(year,1995,1999)
+replace period5=5 if inrange(year,2000,2004)
+replace period5=6 if inrange(year,2005,2009)
+replace period5=7 if inrange(year,2010,2014)
+replace period5=8 if inrange(year,2015,2019)
+replace period5=9 if inrange(year,2020,2025)	 
+
+*LABEL EACH PERIOD
+label define p5 ///
+1 "1980-84" ///
+2 "1985-89" ///
+3 "1990-94" ///
+4 "1995-99" ///
+5 "2000-04" ///
+6 "2005-09" ///
+7 "2010-14" ///
+8 "2015-19" ///
+9 "2020-25"
+
+label values period5 p5
+
+*COLLAPSE TO PERIOD AVERAGES
+collapse (mean) gr, by(period5)
+
+*GENERATE GRAPH
+graph bar gr, ///
+over(period5,label(labsize(small))) ///
+bar(1,color(navy%85) lcolor(white)) ///
+bargap(-80) ///
+blabel(bar, format(%4.1f) color(black) size(small)) ///
+ylabel(-1(2)11,angle(horizontal) grid glcolor(gs14)) ///
+ytitle("Average real GDP growth (%)") ///
+title("Belize: Average Real GDP Growth by Five-Year Period", ///
+color(navy) size(medium)) ///
+subtitle("Evidence of long-run growth deceleration") ///
+legend(off) ///
+graphregion(color(white)) ///
+plotregion(color(white)) ///
+note("Source: SIB and Author's calculations.",size(vsmall))	 
+
+*SECOND GRAPH
+twoway ///
+(connected gr period5, ///
+lcolor(navy) ///
+lwidth(thick) ///
+msymbol(O) ///
+mcolor(maroon) ///
+mlabel(gr) ///
+mlabposition(12) ///
+mlabsize(small)), ///
+xlabel(1 "1980-84" ///
+2 "1985-89" ///
+3 "1990-94" ///
+4 "1995-99" ///
+5 "2000-04" ///
+6 "2005-09" ///
+7 "2010-14" ///
+8 "2015-19" ///
+9 "2020-25", ///
+angle(45) labsize(small)) ///
+ylabel(-5(2)12,angle(horizontal) grid glcolor(gs14)) ///
+xtitle("") ///
+ytitle("Average real GDP growth (%)") ///
+title("Belize: Long-Run Growth Deceleration", ///
+color(navy) size(medium)) ///
+subtitle("Five-year average real GDP growth") ///
+legend(off) ///
+graphregion(color(white)) ///
+plotregion(color(white))
+	 
+*THIRD GRAPH
+twoway ///
+(bar gr period5, ///
+barwidth(.9) ///
+color(navy%85) ///
+lcolor(white) ///
+blabel(bar, format(%4.1f) color(black) size(medium))) ///
+, ///
+xlabel(1 "1980-84" ///
+2 "1985-89" ///
+3 "1990-94" ///
+4 "1995-99" ///
+5 "2000-04" ///
+6 "2005-09" ///
+7 "2010-14" ///
+8 "2015-19" ///
+9 "2020-25", ///
+angle(45) labsize(small)) ///
+ylabel(-1(2)11, angle(horizontal) grid glcolor(gs14)) ///
+ytitle("Average real GDP growth (%)") ///
+xtitle("") ///
+title("Belize: Average Real GDP Growth by Five-Year Period", ///
+color(navy) size(medium)) ///
+subtitle("Evidence of long-run growth deceleration") ///
+legend(off) ///
+graphregion(color(white)) ///
+plotregion(color(white)) ///
+note("Source: SIB and author's calculations.", size(vsmall))
+
+*FOURTH GRAPH
+
+format gr %4.1f
+
+
+*Set the working directory
+cd "C:\Users\desca\Documents\Island Economics\Consultancy\Belize-Labour-Assessment\Data\Belize-Labour-Market-Analysis"
+pwd
+
+twoway ///
+(bar gr period5, ///
+barwidth(.9) ///
+color(navy%85) ///
+lcolor(white)) ///
+(scatter gr period5, ///
+msymbol(none) ///
+mlabel(gr) ///
+mlabposition(12) ///
+mlabsize(small) ///
+mlabcolor(black)) ///
+, ///
+xlabel(1 "1980-84" ///
+2 "1985-89" ///
+3 "1990-94" ///
+4 "1995-99" ///
+5 "2000-04" ///
+6 "2005-09" ///
+7 "2010-14" ///
+8 "2015-19" ///
+9 "2020-25", ///
+angle() labsize(small)) ///
+ylabel(0(2)12, angle(horizontal) grid glcolor(gs14) labsize(small)) ///
+ytitle("Average real GDP growth (%)") ///
+xtitle("") ///
+title("Panel 2: Avg. Real GDP Growth by 5-Year Period", ///
+position(11) color(navy) size(medium)) ///
+subtitle("") ///
+legend(off) ///
+graphregion(color(white)) ///
+plotregion(color(white)) ///
+xsize(6) ///
+ysize(4) ///
+note("Source: SIB and author's calculations.", size(vsmall))
+
+graph save "output\figures\avggrowth.gph", replace
+
+*MERGE THE TWO GRAPHS
+
+graph combine ///
+"output\figures\histgrowth.gph" ///
+"output\figures\avggrowth.gph", ///
+cols(1) ///
+imargin(zero) ///
+graphregion(color(white))
+
+graph save "output\figures\combined_growth.gph", replace
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 *========================================================*
 * Real GDP Per Capita Convergence and Income Thresholds  *
