@@ -97,6 +97,8 @@ note("Source: SIB and author's calculations.", size(vsmall))
 
 
 *---------------------------------------------------------------------------------
+*MAIN GRAPH
+***************************************
 
 *---------------------------------------------------
 * Create sector shares
@@ -234,6 +236,11 @@ gen y7 = y6 + s_admin
 gen y8 = y7 + s_taxes
 gen y9 = y8 + s_other
 
+************
+*Mains Graph
+************
+************
+
 twoway ///
 (rbar zero y1 x, barw(.90) color("70 110 145") lcolor(white)) ///
 (rbar y1 y2 x, barw(.90) color("116 140 82") lcolor(white)) ///
@@ -243,20 +250,30 @@ twoway ///
 (rbar y5 y6 x, barw(.90) color("170 95 95") lcolor(white)) ///
 (rbar y6 y7 x, barw(.90) color("155 90 170") lcolor(white)) ///
 (rbar y7 y8 x, barw(.90) color("230 195 40") lcolor(white)) ///
-(rbar y8 y9 x, barw(.90) color("210 150 95") lcolor(white)), ///
+(rbar y8 y9 x, barw(.90) color("210 110 280") lcolor(white)), ///
 xlabel(1 "1980-84" 2 "1985-89" 3 "1990-94" 4 "1995-99" ///
 5 "2000-04" 6 "2005-09" 7 "2010-14" 8 "2015-19" 9 "2020-24", ///
 labsize(small)) ///
 ylabel(0(20)100,angle(horizontal) grid glcolor(gs13)) ///
 ytitle("Share of Real GDP (%)") ///
 xtitle("") ///
+title("Panel 1: Sectoral Contribution to GDP", color(navy) size(medium) position(11)) ///
+legend(off) ///
+graphregion(color(white)) ///
+xsize(8) ///
+ysize(4) ///
+plotregion(color(white))
+
+graph save "$project\output\figures\fig2A.gph", replace
+
+*NOTE: THIS IS THE LEGEND SYNTAX
+
+/*
 legend(order(1 "Primary Sector" 2 "Secondary Sector" 3 "Wholesale & Retail" ///
 4 "Transport" 5 "Public Administration" 6 "Accommodation & Food" ///
 7 "Administrative Services" 8 "Taxes less subsidies" 9 "Other Services") ///
-rows(3) size(vsmall) region(lstyle(none) fcolor(none))) ///
-graphregion(color(white)) ///
-plotregion(color(white))
-
+rows(2) size(vsmall) region(lstyle(none) fcolor(none))) ///
+graphregion(color(white)) */
 
 ***********************************************************************************
 *Set the Working Directory
@@ -344,22 +361,40 @@ twoway ///
 (rbar p5s p6 period5, barw(.9) color("170 95 95") lcolor(white)) ///
 (rbar p6 p7 period5, barw(.9) color("155 90 170") lcolor(white)) ///
 (rbar p7 p8 period5, barw(.9) color("230 195 40") lcolor(white)) ///
-(rbar p8 p9 period5, barw(.9) color("210 150 95") lcolor(white)) ///
+(rbar p8 p9 period5, barw(.9) color("210 110 280") lcolor(white)) ///
 (line gdp_growth period5, lcolor(black) lwidth(medthick)), ///
-xlabel(1 "1981-85" 2 "1986-90" 3 "1991-95" ///
+xlabel(1 "1981-85" 2 "1986-90" 3 "1991-95" ///git
 4 "1996-00" 5 "2001-05" 6 "2006-10" ///
 7 "2011-15" 8 "2016-20" 9 "2021-24", labsize(small)) ///
 ylabel(-3(3)9, angle(horizontal) grid glcolor(gs14)) ///
 xtitle("") ///
 ytitle("Percentage points") ///
-title("Sectoral Contributions to Real GDP Growth", color(navy) size(medium) position(11)) ///
-subtitle("Five-year average contribution, percentage points") ///
+title("Panel 2: Sectoral Contributions to Real GDP Growth", color(navy) size(medium) position(11)) ///
+subtitle("") ///
 legend(order(1 "Primary Sector" 2 "Secondary Sector" ///
 3 "Wholesale & Retail" 4 "Transport" ///
 5 "Public Administration" 6 "Accommodation & Food" ///
 7 "Administrative Services" 8 "Taxes less subsidies" ///
 9 "Other Services" 10 "GDP growth") ///
-rows(3) size(vsmall) position(6) region(lstyle(none) fcolor(none))) ///
+rows(2) size(tiny) position(6) region(lstyle(none) fcolor(none))) ///
 graphregion(color(white)) ///
 plotregion(color(white)) ///
+xsize(8) ///
+ysize(4) ///
 note("Source: SIB and author's calculations.", size(vsmall))
+
+graph save "$project\output\figures\fig2B.gph", replace
+
+********************************************************************************
+********************************************************************************
+
+*MERGE
+
+graph combine ///
+"$project\output\figures\fig2A.gph" ///
+"$project\output\figures\fig2B.gph", ///
+cols(1) ///
+imargin(zero) ///
+graphregion(color(white)) 
+
+graph save "$project\output\figures\combined_growth2.gph", replace
