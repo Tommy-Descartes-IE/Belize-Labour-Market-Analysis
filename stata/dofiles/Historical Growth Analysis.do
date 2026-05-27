@@ -1,8 +1,28 @@
+/******************************************************************************/
 * Belize Labour Force Study
+* Historical Economic Growth Analysis
+* Author: Tommy Descartes
+/******************************************************************************/
 
-* Economic Growth Analysis
+/*
+---------------------------------------------------------------------///
+Manual insert the data: year and growth rate
+Source: International Monetary Fund World Economic Outlook April 2026
+URL: https://www.imf.org/external/datamapper/profile/BLZ
+---------------------------------------------------------------------///
+*/
+
+/* 
+--------------------------------------------------------------------///
+SETUP
+--------------------------------------------------------------------///
+*/
 
 clear
+set more off
+
+*Input the raw data
+
 input year gr
 1980 5
 1981 0.2
@@ -58,7 +78,7 @@ tsset year
 * 5-year moving average
 tssmooth ma gr_ma = gr, window(2 1 2)
 
-* IMF-style graph
+* GRAPH 1
 twoway ///
 (line gr year, ///
     lcolor(navy) ///
