@@ -363,7 +363,7 @@ twoway ///
 (rbar p7 p8 period5, barw(.9) color("230 195 40") lcolor(white)) ///
 (rbar p8 p9 period5, barw(.9) color("210 110 280") lcolor(white)) ///
 (line gdp_growth period5, lcolor(black) lwidth(medthick)), ///
-xlabel(1 "1981-85" 2 "1986-90" 3 "1991-95" ///git
+xlabel(1 "1981-85" 2 "1986-90" 3 "1991-95" ///
 4 "1996-00" 5 "2001-05" 6 "2006-10" ///
 7 "2011-15" 8 "2016-20" 9 "2021-24", labsize(small)) ///
 ylabel(-3(3)9, angle(horizontal) grid glcolor(gs14)) ///
