@@ -1,2 +1,4 @@
 ~*.tmp
 ~.docx
+~$*.docx
+WRL*.tmp
