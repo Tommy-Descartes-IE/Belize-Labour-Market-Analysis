@@ -56,6 +56,46 @@ gen core_inf = (core/L12.core - 1)*100
 *Generate Graphs
 
 twoway ///
+(line headline months if months>=tm(2019m12), ///
+    lcolor(navy) lwidth(medthick)) ///
+(line core_inf months if months>=tm(2019m12), ///
+    lcolor(forest_green) lwidth(medthick)), ///
+xscale(range(`=tm(2019m12)' `=tm(2025m12)')) ///
+xlabel(`=tm(2019m12)' "Dec-2019" ///
+       `=tm(2020m12)' "Dec-2020" ///
+       `=tm(2021m12)' "Dec-2021" ///
+       `=tm(2022m12)' "Dec-2022" ///
+       `=tm(2023m12)' "Dec-2023" ///
+       `=tm(2024m12)' "Dec-2024"  ///
+	   `=tm(2025m12)' "Dec-2025", ///
+       labsize(vsmall)) ///
+ylabel(-4(2)8, angle(horizontal) labsize(vsmall)) ///
+yline(0, lcolor(gs8) lwidth(thin)) ///
+xtitle("") ///
+ytitle("Percent (%)") ///
+text(7.6 `=tm(2022m6)' "Headline inflation", ///
+     color(navy) size(small)) ///
+text(5.8 `=tm(2024m1)' "Core inflation", ///
+     color(forest_green) size(small)) ///
+legend(off) ///
+graphregion(color(white)) ///
+plotregion(color(white)) ///
+note("Percent change, year-on-year December" ///
+     "Source: Author's calculations using Statistical Institute of Belize CPI data.", ///
+     size(vsmall) color(gs4))
+	 
+graph save "$Inflation\output\figures\fig5A.gph", replace
+
+*************
+*************
+*OTHER GRAPHS
+*************
+*************
+
+
+/* 
+
+twoway ///
     (line headline months, lcolor(navy) lwidth(medthick)) ///
     (line core_inf months, lcolor(maroon) lwidth(medthick)), ///
     ytitle("Percent") ///
@@ -107,5 +147,4 @@ twoway ///
 	graph save "$Inflation\output\figures\fig5A.gph", replace
 
 
-
-
+*/
