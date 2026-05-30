@@ -411,8 +411,8 @@ note("Source: Author's calculations using SIB, ILOSTAT and Penn World Table data
 * Fed-style productivity graph
 *---------------------------------------------------
 
-gen ytop = 16
-gen ybottom = -20
+gen ytop = 15
+gen ybottom = -15
 
 twoway ///
 (rarea ytop ybottom year if year>=2020 & year<=2021, ///
