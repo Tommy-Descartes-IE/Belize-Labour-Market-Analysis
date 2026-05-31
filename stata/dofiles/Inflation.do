@@ -300,7 +300,7 @@ legend(order(1 "Food & Beverages" ///
              4 "Hotels & Restaurants" ///
              5 "Other" ///
              11 "CPI") ///
-       rows(1) ///
+       rows(2) ///
        position(6) ///
        ring(0) ///
        size(tiny) ///
